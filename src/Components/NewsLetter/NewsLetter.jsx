@@ -10,7 +10,6 @@ const NewsLetter = () => {
             <input type='email' placeholder='ur email id'/>
             <button>Subscribe</button>
         </div>
-
     </div>
   )
 }
