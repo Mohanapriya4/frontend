@@ -23,8 +23,38 @@ const AddProduct = () => {
 
   const Add_Product = async ()=>{
     console.log(productDetails);
-    
+     let responseData;
+     let product = productDetails;
+
+     let formData = new FormData()
+     formData.append('product',image)
+
+     await fetch('http://localhost:4000/upload',{
+      method:'POST',
+      headers:{
+        Accept:'application/json'
+      },
+      body:formData
+     }).then((resp)=> resp.json()).then((data)=>{responseData=data})
+
+     if(responseData.success){
+      product.image = responseData.image_url
+      console.log(product);
+      await fetch("http://localhost:4000/addproduct",{
+        method:"POST",
+        headers:{
+          'Content-Type':"application/json",
+           Accept:"Application/json"
+        },
+        body:JSON.stringify(product),
+      }).then((resp)=>resp.json()).then((data)=>{
+        data.success?alert("Product Added Successfully"):alert("Failed to add")
+      })
+      
+      
+     }
   }
+
   return (
     <div className='add-product'>
         <div className='addproduct-itemfield'>
